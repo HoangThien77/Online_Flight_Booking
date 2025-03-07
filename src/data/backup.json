@@ -1,0 +1,890 @@
+{
+  "search_metadata": {
+      "id": "66fcc6b1f933883efe42c8e6",
+      "status": "Success",
+      "json_endpoint": "https://serpapi.com/searches/d9da7e4edd0f6b8c/66fcc6b1f933883efe42c8e6.json",
+      "created_at": "2024-10-02 04:06:09 UTC",
+      "processed_at": "2024-10-02 04:06:09 UTC",
+      "google_flights_url": "https://www.google.com/travel/flights?hl=vi&gl=us&curr=VND&tfs=CBwQAhoeEgoyMDI0LTEwLTAyagcIARIDU0dOcgcIARIDSEtHGh4SCjIwMjQtMTAtMDhqBwgBEgNIS0dyBwgBEgNTR05CAQFIAXABmAEB",
+      "raw_html_file": "https://serpapi.com/searches/d9da7e4edd0f6b8c/66fcc6b1f933883efe42c8e6.html",
+      "prettify_html_file": "https://serpapi.com/searches/d9da7e4edd0f6b8c/66fcc6b1f933883efe42c8e6.prettify",
+      "total_time_taken": 1.74
+  },
+  "search_parameters": {
+      "engine": "google_flights",
+      "hl": "vi",
+      "gl": "us",
+      "departure_id": "SGN",
+      "arrival_id": "HKG",
+      "outbound_date": "2024-10-02",
+      "return_date": "2024-10-08",
+      "currency": "VND",
+      "show_hidden": true
+  },
+  "best_flights": [
+      {
+          "flights": [
+              {
+                  "departure_airport": {
+                      "name": "Cảng hàng không quốc tế Tân Sơn Nhất",
+                      "id": "SGN",
+                      "time": "2024-10-02 15:10"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Hồng Kông",
+                      "id": "HKG",
+                      "time": "2024-10-02 18:50"
+                  },
+                  "duration": 160,
+                  "airplane": "Airbus A321",
+                  "airline": "Vietjet",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VJ.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VJ 876",
+                  "legroom": "71 cm",
+                  "extensions": [
+                      "Below average legroom (71 cm)",
+                      "Carbon emissions estimate: 128 kg"
+                  ],
+                  "often_delayed_by_over_30_min": true
+              }
+          ],
+          "total_duration": 160,
+          "carbon_emissions": {
+              "this_flight": 128000,
+              "typical_for_this_route": 225000,
+              "difference_percent": -43
+          },
+          "price": 5640382,
+          "type": "Round trip",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VJ.png",
+          "departure_token": "WyJDalJJWW0xVFFXSkVWbkUyYTBWQlFucExWRUZDUnkwdExTMHRMUzB0TFhaM2JuRXhNVUZCUVVGQlIySTRlSEpKUWpORFUxVkJFZ1ZXU2pnM05ob01DTDZoMkFJUUFCb0RWazVFT0J4dzdiSUIiLFtbIlNHTiIsIjIwMjQtMTAtMDIiLCJIS0ciLG51bGwsIlZKIiwiODc2Il1dXQ=="
+      },
+      {
+          "flights": [
+              {
+                  "departure_airport": {
+                      "name": "Cảng hàng không quốc tế Tân Sơn Nhất",
+                      "id": "SGN",
+                      "time": "2024-10-02 18:20"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Hồng Kông",
+                      "id": "HKG",
+                      "time": "2024-10-02 22:05"
+                  },
+                  "duration": 165,
+                  "airplane": "Airbus A330",
+                  "airline": "Cathay Pacific",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/CX.png",
+                  "travel_class": "Economy",
+                  "flight_number": "CX 764",
+                  "ticket_also_sold_by": [
+                      "Vietnam Airlines"
+                  ],
+                  "legroom": "81 cm",
+                  "extensions": [
+                      "Above average legroom (81 cm)",
+                      "In-seat power outlet",
+                      "On-demand video",
+                      "Carbon emissions estimate: 131 kg"
+                  ]
+              }
+          ],
+          "total_duration": 165,
+          "carbon_emissions": {
+              "this_flight": 131000,
+              "typical_for_this_route": 225000,
+              "difference_percent": -42
+          },
+          "price": 7694298,
+          "type": "Round trip",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/CX.png",
+          "departure_token": "WyJDalJJWW0xVFFXSkVWbkUyYTBWQlFucExWRUZDUnkwdExTMHRMUzB0TFhaM2JuRXhNVUZCUVVGQlIySTRlSEpKUWpORFUxVkJFZ1ZEV0RjMk5Cb01DTnJQMVFNUUFCb0RWazVFT0J4dy92TUIiLFtbIlNHTiIsIjIwMjQtMTAtMDIiLCJIS0ciLG51bGwsIkNYIiwiNzY0Il1dXQ=="
+      },
+      {
+          "flights": [
+              {
+                  "departure_airport": {
+                      "name": "Cảng hàng không quốc tế Tân Sơn Nhất",
+                      "id": "SGN",
+                      "time": "2024-10-02 11:25"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Hồng Kông",
+                      "id": "HKG",
+                      "time": "2024-10-02 15:15"
+                  },
+                  "duration": 170,
+                  "airplane": "Airbus A321neo",
+                  "airline": "Cathay Pacific",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/CX.png",
+                  "travel_class": "Economy",
+                  "flight_number": "CX 766",
+                  "ticket_also_sold_by": [
+                      "Vietnam Airlines"
+                  ],
+                  "legroom": "76 cm",
+                  "extensions": [
+                      "Average legroom (76 cm)",
+                      "Wi-Fi for a fee",
+                      "In-seat USB outlet",
+                      "On-demand video",
+                      "Carbon emissions estimate: 122 kg"
+                  ]
+              }
+          ],
+          "total_duration": 170,
+          "carbon_emissions": {
+              "this_flight": 123000,
+              "typical_for_this_route": 225000,
+              "difference_percent": -45
+          },
+          "price": 8679798,
+          "type": "Round trip",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/CX.png",
+          "departure_token": "WyJDalJJWW0xVFFXSkVWbkUyYTBWQlFucExWRUZDUnkwdExTMHRMUzB0TFhaM2JuRXhNVUZCUVVGQlIySTRlSEpKUWpORFUxVkJFZ1ZEV0RjMk5ob01DUGJpa1FRUUFCb0RWazVFT0J4d25wTUMiLFtbIlNHTiIsIjIwMjQtMTAtMDIiLCJIS0ciLG51bGwsIkNYIiwiNzY2Il1dXQ=="
+      }
+  ],
+  "other_flights": [
+      {
+          "flights": [
+              {
+                  "departure_airport": {
+                      "name": "Cảng hàng không quốc tế Tân Sơn Nhất",
+                      "id": "SGN",
+                      "time": "2024-10-02 12:00"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-02 14:15"
+                  },
+                  "duration": 135,
+                  "airplane": "Airbus A350",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 212",
+                  "legroom": "79 cm",
+                  "extensions": [
+                      "Average legroom (79 cm)",
+                      "In-seat power & USB outlets",
+                      "On-demand video",
+                      "Carbon emissions estimate: 104 kg"
+                  ]
+              },
+              {
+                  "departure_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-03 10:30"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Hồng Kông",
+                      "id": "HKG",
+                      "time": "2024-10-03 13:30"
+                  },
+                  "duration": 120,
+                  "airplane": "Airbus A321",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 592",
+                  "legroom": "79 cm",
+                  "extensions": [
+                      "Average legroom (79 cm)",
+                      "Stream media to your device",
+                      "Carbon emissions estimate: 103 kg"
+                  ]
+              }
+          ],
+          "layovers": [
+              {
+                  "duration": 1215,
+                  "name": "Sân bay quốc tế Nội Bài",
+                  "id": "HAN",
+                  "overnight": true
+              }
+          ],
+          "total_duration": 1470,
+          "carbon_emissions": {
+              "this_flight": 208000,
+              "typical_for_this_route": 225000,
+              "difference_percent": -8
+          },
+          "price": 6557000,
+          "type": "Round trip",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+          "departure_token": "WyJDalJJWW0xVFFXSkVWbkUyYTBWQlFucExWRUZDUnkwdExTMHRMUzB0TFhaM2JuRXhNVUZCUVVGQlIySTRlSEpKUWpORFUxVkJFZ3RXVGpJeE1ueFdUalU1TWhvTUNNaWFrQU1RQUJvRFZrNUVPQnh3OXM4QiIsW1siU0dOIiwiMjAyNC0xMC0wMiIsIkhBTiIsbnVsbCwiVk4iLCIyMTIiXSxbIkhBTiIsIjIwMjQtMTAtMDMiLCJIS0ciLG51bGwsIlZOIiwiNTkyIl1dXQ=="
+      },
+      {
+          "flights": [
+              {
+                  "departure_airport": {
+                      "name": "Cảng hàng không quốc tế Tân Sơn Nhất",
+                      "id": "SGN",
+                      "time": "2024-10-02 13:00"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-02 15:15"
+                  },
+                  "duration": 135,
+                  "airplane": "Airbus A350",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 248",
+                  "legroom": "79 cm",
+                  "extensions": [
+                      "Average legroom (79 cm)",
+                      "In-seat power & USB outlets",
+                      "On-demand video",
+                      "Carbon emissions estimate: 104 kg"
+                  ],
+                  "often_delayed_by_over_30_min": true
+              },
+              {
+                  "departure_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-03 10:30"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Hồng Kông",
+                      "id": "HKG",
+                      "time": "2024-10-03 13:30"
+                  },
+                  "duration": 120,
+                  "airplane": "Airbus A321",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 592",
+                  "legroom": "79 cm",
+                  "extensions": [
+                      "Average legroom (79 cm)",
+                      "Stream media to your device",
+                      "Carbon emissions estimate: 103 kg"
+                  ]
+              }
+          ],
+          "layovers": [
+              {
+                  "duration": 1155,
+                  "name": "Sân bay quốc tế Nội Bài",
+                  "id": "HAN",
+                  "overnight": true
+              }
+          ],
+          "total_duration": 1410,
+          "carbon_emissions": {
+              "this_flight": 208000,
+              "typical_for_this_route": 225000,
+              "difference_percent": -8
+          },
+          "price": 6557000,
+          "type": "Round trip",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+          "departure_token": "WyJDalJJWW0xVFFXSkVWbkUyYTBWQlFucExWRUZDUnkwdExTMHRMUzB0TFhaM2JuRXhNVUZCUVVGQlIySTRlSEpKUWpORFUxVkJFZ3RXVGpJME9IeFdUalU1TWhvTUNNaWFrQU1RQUJvRFZrNUVPQnh3OXM4QiIsW1siU0dOIiwiMjAyNC0xMC0wMiIsIkhBTiIsbnVsbCwiVk4iLCIyNDgiXSxbIkhBTiIsIjIwMjQtMTAtMDMiLCJIS0ciLG51bGwsIlZOIiwiNTkyIl1dXQ=="
+      },
+      {
+          "flights": [
+              {
+                  "departure_airport": {
+                      "name": "Cảng hàng không quốc tế Tân Sơn Nhất",
+                      "id": "SGN",
+                      "time": "2024-10-02 14:00"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-02 16:15"
+                  },
+                  "duration": 135,
+                  "airplane": "Boeing 787",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 214",
+                  "legroom": "81 cm",
+                  "extensions": [
+                      "Above average legroom (81 cm)",
+                      "In-seat power & USB outlets",
+                      "On-demand video",
+                      "Carbon emissions estimate: 111 kg"
+                  ]
+              },
+              {
+                  "departure_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-03 10:30"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Hồng Kông",
+                      "id": "HKG",
+                      "time": "2024-10-03 13:30"
+                  },
+                  "duration": 120,
+                  "airplane": "Airbus A321",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 592",
+                  "legroom": "79 cm",
+                  "extensions": [
+                      "Average legroom (79 cm)",
+                      "Stream media to your device",
+                      "Carbon emissions estimate: 103 kg"
+                  ]
+              }
+          ],
+          "layovers": [
+              {
+                  "duration": 1095,
+                  "name": "Sân bay quốc tế Nội Bài",
+                  "id": "HAN",
+                  "overnight": true
+              }
+          ],
+          "total_duration": 1350,
+          "carbon_emissions": {
+              "this_flight": 216000,
+              "typical_for_this_route": 225000,
+              "difference_percent": -4
+          },
+          "price": 6557000,
+          "type": "Round trip",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+          "departure_token": "WyJDalJJWW0xVFFXSkVWbkUyYTBWQlFucExWRUZDUnkwdExTMHRMUzB0TFhaM2JuRXhNVUZCUVVGQlIySTRlSEpKUWpORFUxVkJFZ3RXVGpJeE5IeFdUalU1TWhvTUNNaWFrQU1RQUJvRFZrNUVPQnh3OXM4QiIsW1siU0dOIiwiMjAyNC0xMC0wMiIsIkhBTiIsbnVsbCwiVk4iLCIyMTQiXSxbIkhBTiIsIjIwMjQtMTAtMDMiLCJIS0ciLG51bGwsIlZOIiwiNTkyIl1dXQ=="
+      },
+      {
+          "flights": [
+              {
+                  "departure_airport": {
+                      "name": "Cảng hàng không quốc tế Tân Sơn Nhất",
+                      "id": "SGN",
+                      "time": "2024-10-02 15:00"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-02 17:15"
+                  },
+                  "duration": 135,
+                  "airplane": "Airbus A350",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 250",
+                  "legroom": "79 cm",
+                  "extensions": [
+                      "Average legroom (79 cm)",
+                      "In-seat power & USB outlets",
+                      "On-demand video",
+                      "Carbon emissions estimate: 104 kg"
+                  ]
+              },
+              {
+                  "departure_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-03 10:30"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Hồng Kông",
+                      "id": "HKG",
+                      "time": "2024-10-03 13:30"
+                  },
+                  "duration": 120,
+                  "airplane": "Airbus A321",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 592",
+                  "legroom": "79 cm",
+                  "extensions": [
+                      "Average legroom (79 cm)",
+                      "Stream media to your device",
+                      "Carbon emissions estimate: 103 kg"
+                  ]
+              }
+          ],
+          "layovers": [
+              {
+                  "duration": 1035,
+                  "name": "Sân bay quốc tế Nội Bài",
+                  "id": "HAN",
+                  "overnight": true
+              }
+          ],
+          "total_duration": 1290,
+          "carbon_emissions": {
+              "this_flight": 208000,
+              "typical_for_this_route": 225000,
+              "difference_percent": -8
+          },
+          "price": 6557000,
+          "type": "Round trip",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+          "departure_token": "WyJDalJJWW0xVFFXSkVWbkUyYTBWQlFucExWRUZDUnkwdExTMHRMUzB0TFhaM2JuRXhNVUZCUVVGQlIySTRlSEpKUWpORFUxVkJFZ3RXVGpJMU1IeFdUalU1TWhvTUNNaWFrQU1RQUJvRFZrNUVPQnh3OXM4QiIsW1siU0dOIiwiMjAyNC0xMC0wMiIsIkhBTiIsbnVsbCwiVk4iLCIyNTAiXSxbIkhBTiIsIjIwMjQtMTAtMDMiLCJIS0ciLG51bGwsIlZOIiwiNTkyIl1dXQ=="
+      },
+      {
+          "flights": [
+              {
+                  "departure_airport": {
+                      "name": "Cảng hàng không quốc tế Tân Sơn Nhất",
+                      "id": "SGN",
+                      "time": "2024-10-02 16:00"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-02 18:15"
+                  },
+                  "duration": 135,
+                  "airplane": "Boeing 787",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 216",
+                  "legroom": "81 cm",
+                  "extensions": [
+                      "Above average legroom (81 cm)",
+                      "In-seat power & USB outlets",
+                      "On-demand video",
+                      "Carbon emissions estimate: 91 kg"
+                  ]
+              },
+              {
+                  "departure_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-03 10:30"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Hồng Kông",
+                      "id": "HKG",
+                      "time": "2024-10-03 13:30"
+                  },
+                  "duration": 120,
+                  "airplane": "Airbus A321",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 592",
+                  "legroom": "79 cm",
+                  "extensions": [
+                      "Average legroom (79 cm)",
+                      "Stream media to your device",
+                      "Carbon emissions estimate: 103 kg"
+                  ]
+              }
+          ],
+          "layovers": [
+              {
+                  "duration": 975,
+                  "name": "Sân bay quốc tế Nội Bài",
+                  "id": "HAN",
+                  "overnight": true
+              }
+          ],
+          "total_duration": 1230,
+          "carbon_emissions": {
+              "this_flight": 195000,
+              "typical_for_this_route": 225000,
+              "difference_percent": -13
+          },
+          "price": 6557000,
+          "type": "Round trip",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+          "departure_token": "WyJDalJJWW0xVFFXSkVWbkUyYTBWQlFucExWRUZDUnkwdExTMHRMUzB0TFhaM2JuRXhNVUZCUVVGQlIySTRlSEpKUWpORFUxVkJFZ3RXVGpJeE5ueFdUalU1TWhvTUNNaWFrQU1RQUJvRFZrNUVPQnh3OXM4QiIsW1siU0dOIiwiMjAyNC0xMC0wMiIsIkhBTiIsbnVsbCwiVk4iLCIyMTYiXSxbIkhBTiIsIjIwMjQtMTAtMDMiLCJIS0ciLG51bGwsIlZOIiwiNTkyIl1dXQ=="
+      },
+      {
+          "flights": [
+              {
+                  "departure_airport": {
+                      "name": "Cảng hàng không quốc tế Tân Sơn Nhất",
+                      "id": "SGN",
+                      "time": "2024-10-02 17:00"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-02 19:15"
+                  },
+                  "duration": 135,
+                  "airplane": "Airbus A350",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 254",
+                  "legroom": "81 cm",
+                  "extensions": [
+                      "Above average legroom (81 cm)",
+                      "In-seat power & USB outlets",
+                      "On-demand video",
+                      "Carbon emissions estimate: 101 kg"
+                  ]
+              },
+              {
+                  "departure_airport": {
+                      "name": "Sân bay quốc tế Nội Bài",
+                      "id": "HAN",
+                      "time": "2024-10-03 10:30"
+                  },
+                  "arrival_airport": {
+                      "name": "Sân bay quốc tế Hồng Kông",
+                      "id": "HKG",
+                      "time": "2024-10-03 13:30"
+                  },
+                  "duration": 120,
+                  "airplane": "Airbus A321",
+                  "airline": "Vietnam Airlines",
+                  "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+                  "travel_class": "Economy",
+                  "flight_number": "VN 592",
+                  "legroom": "79 cm",
+                  "extensions": [
+                      "Average legroom (79 cm)",
+                      "Stream media to your device",
+                      "Carbon emissions estimate: 103 kg"
+                  ]
+              }
+          ],
+          "layovers": [
+              {
+                  "duration": 915,
+                  "name": "Sân bay quốc tế Nội Bài",
+                  "id": "HAN",
+                  "overnight": true
+              }
+          ],
+          "total_duration": 1170,
+          "carbon_emissions": {
+              "this_flight": 205000,
+              "typical_for_this_route": 225000,
+              "difference_percent": -9
+          },
+          "price": 6557000,
+          "type": "Round trip",
+          "airline_logo": "https://www.gstatic.com/flights/airline_logos/70px/VN.png",
+          "departure_token": "WyJDalJJWW0xVFFXSkVWbkUyYTBWQlFucExWRUZDUnkwdExTMHRMUzB0TFhaM2JuRXhNVUZCUVVGQlIySTRlSEpKUWpORFUxVkJFZ3RXVGpJMU5IeFdUalU1TWhvTUNNaWFrQU1RQUJvRFZrNUVPQnh3OXM4QiIsW1siU0dOIiwiMjAyNC0xMC0wMiIsIkhBTiIsbnVsbCwiVk4iLCIyNTQiXSxbIkhBTiIsIjIwMjQtMTAtMDMiLCJIS0ciLG51bGwsIlZOIiwiNTkyIl1dXQ=="
+      }
+  ],
+  "price_insights": {
+      "lowest_price": 5640382,
+      "price_level": "typical",
+      "typical_price_range": [
+          5300000,
+          6700000
+      ],
+      "price_history": [
+          [
+              1722618000,
+              6385000
+          ],
+          [
+              1722704400,
+              6385000
+          ],
+          [
+              1722790800,
+              6385000
+          ],
+          [
+              1722877200,
+              6365000
+          ],
+          [
+              1722963600,
+              6365000
+          ],
+          [
+              1723050000,
+              6370000
+          ],
+          [
+              1723136400,
+              6369000
+          ],
+          [
+              1723222800,
+              5561554
+          ],
+          [
+              1723309200,
+              5561507
+          ],
+          [
+              1723395600,
+              5464465
+          ],
+          [
+              1723482000,
+              5473744
+          ],
+          [
+              1723568400,
+              5475473
+          ],
+          [
+              1723654800,
+              5552220
+          ],
+          [
+              1723741200,
+              5617740
+          ],
+          [
+              1723827600,
+              5820622
+          ],
+          [
+              1723914000,
+              5820549
+          ],
+          [
+              1724000400,
+              5820324
+          ],
+          [
+              1724086800,
+              6658000
+          ],
+          [
+              1724173200,
+              6638000
+          ],
+          [
+              1724259600,
+              6495252
+          ],
+          [
+              1724346000,
+              6644000
+          ],
+          [
+              1724432400,
+              6647000
+          ],
+          [
+              1724518800,
+              6665000
+          ],
+          [
+              1724605200,
+              6665000
+          ],
+          [
+              1724691600,
+              6632000
+          ],
+          [
+              1724778000,
+              6614000
+          ],
+          [
+              1724864400,
+              6488072
+          ],
+          [
+              1724950800,
+              6623000
+          ],
+          [
+              1725037200,
+              6632000
+          ],
+          [
+              1725123600,
+              6632000
+          ],
+          [
+              1725210000,
+              6632000
+          ],
+          [
+              1725296400,
+              6107367
+          ],
+          [
+              1725382800,
+              6098836
+          ],
+          [
+              1725469200,
+              5584240
+          ],
+          [
+              1725555600,
+              5584415
+          ],
+          [
+              1725642000,
+              6058449
+          ],
+          [
+              1725728400,
+              6219434
+          ],
+          [
+              1725814800,
+              6219056
+          ],
+          [
+              1725901200,
+              6229299
+          ],
+          [
+              1725987600,
+              6570000
+          ],
+          [
+              1726074000,
+              6277431
+          ],
+          [
+              1726160400,
+              6135643
+          ],
+          [
+              1726246800,
+              6272812
+          ],
+          [
+              1726333200,
+              6178545
+          ],
+          [
+              1726419600,
+              5342979
+          ],
+          [
+              1726506000,
+              5343395
+          ],
+          [
+              1726592400,
+              5924473
+          ],
+          [
+              1726678800,
+              5918330
+          ],
+          [
+              1726765200,
+              5914419
+          ],
+          [
+              1726851600,
+              6029792
+          ],
+          [
+              1726938000,
+              6030251
+          ],
+          [
+              1727024400,
+              6216143
+          ],
+          [
+              1727110800,
+              6221143
+          ],
+          [
+              1727197200,
+              6282334
+          ],
+          [
+              1727283600,
+              5363152
+          ],
+          [
+              1727370000,
+              5412575
+          ],
+          [
+              1727456400,
+              5417867
+          ],
+          [
+              1727542800,
+              5564006
+          ],
+          [
+              1727629200,
+              5563702
+          ],
+          [
+              1727715600,
+              5612469
+          ],
+          [
+              1727802000,
+              5640382
+          ]
+      ]
+  },
+  "airports": [
+      {
+          "departure": [
+              {
+                  "airport": {
+                      "id": "SGN",
+                      "name": "Cảng hàng không quốc tế Tân Sơn Nhất"
+                  },
+                  "city": "Thành phố Hồ Chí Minh",
+                  "country": "Việt Nam",
+                  "country_code": "VN",
+                  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNAOCcUPynkZ8t86Ig-09uyTyQNYxwjy0W-RChnrvjZK2pg-tiukuujhbLg8Wq0nYc6x4RFHQ3x03lLA",
+                  "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGXVpebF31lQYMejuvMIypWNPE1ufTwJOb_dxVK9AX8XLlF4a4KLg6O-6353PiJkncKUgSBrJTQwkY3cFiPV-Vzkm1gBlcWDuSY3obrzk"
+              }
+          ],
+          "arrival": [
+              {
+                  "airport": {
+                      "id": "HKG",
+                      "name": "Sân bay quốc tế Hồng Kông"
+                  },
+                  "city": "Hồng Kông",
+                  "country": "Hồng Kông",
+                  "country_code": "HK",
+                  "image": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMD93agOhZ0saN2VpgTJWpAlI43dp__ekMUoyjxOf1YQKwfVMKOgxq58Qss98k9GWaKu7hTRO1H-wOV_gnFieHjbRWhCmwd-WKuiIn41k",
+                  "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRgSRD6RvogwjTaEMXvukqv53J66Agv9JzT-OTCiWafInV55_77v1cHsVXGiGlFoV0Lc27Bp_K0aMOs_rugyajhgsyC18fibmox92aDP-w"
+              }
+          ]
+      },
+      {
+          "departure": [
+              {
+                  "airport": {
+                      "id": "HKG",
+                      "name": "Sân bay quốc tế Hồng Kông"
+                  },
+                  "city": "Hồng Kông",
+                  "country": "Hồng Kông",
+                  "country_code": "HK",
+                  "image": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMD93agOhZ0saN2VpgTJWpAlI43dp__ekMUoyjxOf1YQKwfVMKOgxq58Qss98k9GWaKu7hTRO1H-wOV_gnFieHjbRWhCmwd-WKuiIn41k",
+                  "thumbnail": "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRgSRD6RvogwjTaEMXvukqv53J66Agv9JzT-OTCiWafInV55_77v1cHsVXGiGlFoV0Lc27Bp_K0aMOs_rugyajhgsyC18fibmox92aDP-w"
+              }
+          ],
+          "arrival": [
+              {
+                  "airport": {
+                      "id": "SGN",
+                      "name": "Cảng hàng không quốc tế Tân Sơn Nhất"
+                  },
+                  "city": "Thành phố Hồ Chí Minh",
+                  "country": "Việt Nam",
+                  "country_code": "VN",
+                  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNAOCcUPynkZ8t86Ig-09uyTyQNYxwjy0W-RChnrvjZK2pg-tiukuujhbLg8Wq0nYc6x4RFHQ3x03lLA",
+                  "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGXVpebF31lQYMejuvMIypWNPE1ufTwJOb_dxVK9AX8XLlF4a4KLg6O-6353PiJkncKUgSBrJTQwkY3cFiPV-Vzkm1gBlcWDuSY3obrzk"
+              }
+          ]
+      }
+  ]
+}

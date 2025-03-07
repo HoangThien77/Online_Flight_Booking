@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.filter-flight-ctn {
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: none
+}
+
+.filter-flight-ctn::-webkit-scrollbar {
+  width: .25rem
+}
+
+.filter-flight-ctn::-webkit-scrollbar-thumb,.filter-flight-ctn::-webkit-scrollbar-track {
+  background-color: transparent
+}
+
+.filter-flight-ctn:hover::-webkit-scrollbar-track {
+  background-color: hsla(0,0%,9%,.1)
+}
+
+.filter-flight-ctn:hover::-webkit-scrollbar-thumb {
+  background-color: hsla(0,0%,9%,.3)
+}
+
+svg {
+  display: block;
+  margin: 0 auto;
+}
+
+path {
+  transform-origin: center;
+}
+
+@keyframes movePlane {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(150px); /* Chiếc máy bay sẽ di chuyển 150px theo trục x */
+  }
+}
+
+.plane {
+  animation: movePlane 2s infinite ease-in-out; /* Tạo hoạt ảnh liên tục */
+}

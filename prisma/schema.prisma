@@ -1,0 +1,125 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Bảng Customer (Khách hàng)
+model Customer {
+  id          Int      @id @default(autoincrement())
+  bookingId   Int
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+  firstName   String
+  lastName    String
+  dateOfBirth DateTime
+  gender      String
+  nationality String
+  type        String   @default("adult")  // Thêm default value
+
+  @@index([bookingId])
+}
+
+// Bảng ContactCustomer (Người liên hệ thanh toán)
+model User {
+  id                Int       @id @default(autoincrement())
+  email             String    @unique // Email dùng chung cho cả loại người dùng
+  name              String?
+  phoneNumber       String?
+  password          String? // Dùng cho người dùng đăng nhập bằng username/passwordz
+  address           String?
+  provider          String? // Lưu tên provider (vd: 'google', 'credentials')
+  providerAccountId String? // Lưu ID tài khoản provider (vd: Google ID)
+  image             String? // Ảnh profile (chỉ cho người dùng Google hoặc OAuth)
+  bookings          Booking[] // Một ContactCustomer chỉ có một Booking
+  reviews           Review[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  role              String    @default("USER")
+}
+
+// Bảng Booking (Đặt vé)
+model Booking {
+  id          Int        @id @default(autoincrement())
+  userId      Int // Liên kết với ContactCustomer (người chịu trách nhiệm thanh toán)
+  user        User       @relation(fields: [userId], references: [id])
+  isRoundTrip Boolean
+  destination String?
+  tickets     Ticket[]
+  customers   Customer[]
+  reviews Review[]
+  payment     Payment?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  pnrId       String     @unique
+  totalAmount Float
+  status      String // Upcoming, Completed, Cancelled
+}
+
+// Bảng Ticket (Vé máy bay)
+model Ticket {
+  id        Int     @id @default(autoincrement())
+  bookingId Int // Liên kết với Booking
+  booking   Booking @relation(fields: [bookingId], references: [id])
+
+  flightNumber     String
+  airline          String
+  departureAirport String
+  arrivalAirport   String
+  departureTime    DateTime
+  arrivalTime      DateTime
+  travelClass      String
+  total_duration   Int
+  tripType         String // Outbound hoặc Return
+  seatNumber       String // Hard code
+}
+
+// Bảng Payment (Thanh toán) 
+model Payment {
+  id            Int      @id @default(autoincrement())
+  bookingId     Int      @unique // Liên kết với Booking
+  booking       Booking  @relation(fields: [bookingId], references: [id])
+  amount        Float // Số tiền thanh toán
+  paymentMethod String
+  status        String // Trạng thái thanh toán (đã thanh toán, chờ xử lý, etc.)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// Tạo booking trước, sau đó tạo Ticket
+
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  bookingId Int
+  booking   Booking  @relation(fields: [bookingId], references: [id])
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  rating    Int
+  comment   String
+  images    ReviewImage[] // Add this line
+  emojis    ReviewEmoji[] // Add this line
+  createdAt DateTime @default(now())
+}
+
+model ReviewImage {
+  id       Int      @id @default(autoincrement())
+  reviewId Int
+  review   Review   @relation(fields: [reviewId], references: [id])
+  url      String
+  createdAt DateTime @default(now())
+}
+
+model ReviewEmoji {
+  id       Int      @id @default(autoincrement())
+  reviewId Int
+  review   Review   @relation(fields: [reviewId], references: [id])
+  emoji    String
+  label    String
+  createdAt DateTime @default(now())
+}
