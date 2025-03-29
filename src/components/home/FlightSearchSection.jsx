@@ -324,6 +324,7 @@ export default function FlightSearchSection() {
           autoPlay
           loop
           muted
+          preload="auto" // Yêu cầu tải video sớm
           className="absolute left-0 top-0 z-0 size-full object-cover"
           src={videoSrc}
           style={{ filter: "grayscale(20%) brightness(60%)" }}
