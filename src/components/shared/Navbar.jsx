@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -12,6 +11,8 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
+
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -96,10 +97,23 @@ const Navbar = () => {
         <div className="flex items-center space-x-10">
           {session ? (
             <div className="flex items-center space-x-2">
-              <Dropdown css={{ color: "white " }}>
+              <Dropdown css={{ color: "white" }}>
                 <DropdownTrigger>
-                  <Button variant="light">
-                    <FaUserCircle className="text-2xl text-white" />
+                  <Button
+                    variant="light"
+                    className="flex items-center space-x-2"
+                  >
+                    <Avatar className="size-8">
+                      <AvatarImage
+                        src={
+                          session.user.image ? session.user.image : undefined
+                        }
+                        alt={session.user.name || "avatar"}
+                      />
+                      <AvatarFallback>
+                        <FaUserCircle className="text-xl text-gray-400" />
+                      </AvatarFallback>
+                    </Avatar>
                     <span className="text-sm text-white">
                       {session.user.email}
                     </span>

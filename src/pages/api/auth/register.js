@@ -1,9 +1,10 @@
-import prisma from "@/lib/prisma";
+// pages/api/auth/register.js
 import bcrypt from "bcrypt";
+
+import prisma from "@/lib/prisma";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    console.log(req.body);
     const { email, password, name, phoneNumber } = req.body;
 
     const existingUser = await prisma.user.findUnique({
@@ -24,6 +25,9 @@ export default async function handler(req, res) {
           phoneNumber,
         },
       });
+
+      // Dispatch action để cập nhật Redux store (lưu ý: điều này chỉ hoạt động phía client)
+      // Ở đây chỉ trả về dữ liệu, client sẽ dispatch action
       return res
         .status(201)
         .json({ message: "Đăng ký thành công", user: newUser });

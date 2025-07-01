@@ -1,19 +1,35 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FaEye, FaEyeSlash, FaPlane } from "react-icons/fa";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
 import { useDebounce } from "use-debounce";
+import { signIn, useSession } from "next-auth/react";
+import { toast } from "sonner";
+
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+  registerStart,
+  registerSuccess,
+  registerFailure,
+} from "@/features/auth/authSlice";
 
 const Login = () => {
   const { data: session } = useSession();
+  const dispatch = useDispatch();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const { isAuthenticated, loading, error } = useSelector(
+    (state) => state.auth,
+  );
+
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,16 +38,14 @@ const Login = () => {
     phoneNumber: "",
   });
   const [errors, setErrors] = useState({});
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
   const [debouncedEmail] = useDebounce(formData.email, 300);
   const [debouncedPhoneNumber] = useDebounce(formData.phoneNumber, 300);
 
   useEffect(() => {
-    if (session) {
+    if (isAuthenticated || session) {
       router.replace(callbackUrl);
     }
-  }, [session, callbackUrl]);
+  }, [isAuthenticated, session, callbackUrl, router]);
 
   const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -58,21 +72,21 @@ const Login = () => {
     switch (name) {
       case "email":
         if (!validateEmail(value)) {
-          newErrors.email = "Invalid email format";
+          newErrors.email = "Email không hợp lệ";
         } else {
           delete newErrors.email;
         }
         break;
       case "password":
         if (value.length < 8) {
-          newErrors.password = "Password must be at least 8 characters long";
+          newErrors.password = "Mật khẩu phải dài ít nhất 8 ký tự";
         } else {
           delete newErrors.password;
         }
         break;
       case "confirmPassword":
         if (value !== formData.password) {
-          newErrors.confirmPassword = "Passwords do not match";
+          newErrors.confirmPassword = "Mật khẩu không khớp";
         } else {
           delete newErrors.confirmPassword;
         }
@@ -86,8 +100,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
       if (isLogin) {
+        dispatch(loginStart());
         const result = await signIn("credentials", {
           redirect: false,
           email: formData.email,
@@ -95,26 +109,56 @@ const Login = () => {
         });
 
         if (result?.error) {
-          setErrors({ general: "Invalid username or password" });
+          dispatch(loginFailure("Tên đăng nhập hoặc mật khẩu không đúng"));
+          setErrors({ general: "Tên đăng nhập hoặc mật khẩu không đúng" });
+          toast.error("Tên đăng nhập hoặc mật khẩu không đúng");
+        } else {
+          dispatch(loginSuccess({ email: formData.email }));
+          toast.success("Đăng nhập thành công!");
         }
       } else {
+        dispatch(registerStart());
         const result = await axios.post("/api/auth/register", formData);
 
         if (result.status === 201) {
-          toggleAuthMode();
+          dispatch(registerSuccess(result.data.user));
+          toast.success("Đăng ký thành công! Đang đăng nhập...");
+
+          // Tự động đăng nhập sau khi đăng ký thành công
+          const loginResult = await signIn("credentials", {
+            redirect: false,
+            email: formData.email,
+            password: formData.password,
+          });
+
+          if (loginResult?.error) {
+            dispatch(loginFailure("Lỗi khi đăng nhập tự động"));
+            setErrors({ general: "Lỗi khi đăng nhập tự động" });
+            toast.error("Lỗi khi đăng nhập tự động");
+            setIsLogin(true); // Chuyển về chế độ đăng nhập nếu đăng nhập thất bại
+          } else {
+            dispatch(loginSuccess({ email: formData.email }));
+            router.replace("/"); // Chuyển hướng về trang chủ
+          }
         } else {
-          setErrors({ general: "Error during registration" });
+          dispatch(registerFailure("Lỗi trong quá trình đăng ký"));
+          setErrors({ general: "Lỗi trong quá trình đăng ký" });
+          toast.error("Lỗi trong quá trình đăng ký");
         }
       }
     } catch (error) {
-      setErrors({ general: "Unexpected error occurred" });
-    } finally {
-      setLoading(false);
+      const errorMessage = "Đã xảy ra lỗi không xác định";
+
+      dispatch(
+        isLogin ? loginFailure(errorMessage) : registerFailure(errorMessage),
+      );
+      setErrors({ general: errorMessage });
+      toast.error(errorMessage);
     }
   };
 
   const handleGoogleSignIn = () => {
-    signIn("google", { callbackUrl: callbackUrl });
+    signIn("google", { callbackUrl });
   };
 
   const toggleAuthMode = () => {
@@ -130,7 +174,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+    <div className="px-412 flex min-h-screen items-center justify-center bg-gray-50 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-10 shadow-md">
         <div className="text-center">
           <FaPlane className="mx-auto h-12 w-auto text-gray-600" />
@@ -153,7 +197,7 @@ const Login = () => {
                   className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder:text-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   id="name"
                   name="name"
-                  placeholder="Full Name"
+                  placeholder="Tên đầy đủ"
                   type="text"
                   value={formData.name}
                   onChange={handleInputChange}
@@ -173,7 +217,7 @@ const Login = () => {
                   className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder:text-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   id="phoneNumber"
                   name="phoneNumber"
-                  placeholder="Phone Number"
+                  placeholder="Số điện thoại"
                   type="text"
                   value={formData.phoneNumber}
                   onChange={handleInputChange}
@@ -195,7 +239,7 @@ const Login = () => {
                 } text-gray-900 placeholder:text-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                 id="email-address"
                 name="email"
-                placeholder="Email address"
+                placeholder="Địa chỉ email"
                 type="email"
                 value={formData.email}
                 onChange={handleInputChange}
@@ -219,7 +263,7 @@ const Login = () => {
                 } text-gray-900 placeholder:text-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                 id="password"
                 name="password"
-                placeholder="Password"
+                placeholder="Mật khẩu"
                 type={showPassword ? "text" : "password"}
                 value={formData.password}
                 onChange={handleInputChange}
@@ -256,7 +300,7 @@ const Login = () => {
                   } text-gray-900 placeholder:text-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm`}
                   id="confirm-password"
                   name="confirmPassword"
-                  placeholder="Confirm Password"
+                  placeholder="Nhập lại mật khẩu"
                   type="password"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
@@ -302,9 +346,9 @@ const Login = () => {
               ) : null}
               {isLogin ? "Đăng nhập" : "Đăng ký"}
             </button>
-            {errors.general && (
+            {(errors.general || error) && (
               <p className="mt-2 text-center text-xs text-red-500">
-                {errors.general}
+                {errors.general || error}
               </p>
             )}
           </div>

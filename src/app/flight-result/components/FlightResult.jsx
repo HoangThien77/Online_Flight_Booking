@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import FlightCard from "./FlightCard";
 import FlightFilter from "./FlightFilter";
 import FlightSortBar from "./FlightSortBar";
+import ProgressBar from "./ProgressBar";
 
 import { travelClassLabel } from "@/const";
 
@@ -12,15 +13,14 @@ const FlightList = ({
   leg,
   totalFlightsFound,
   travelClass,
+  loading, // Thêm prop loading
 }) => {
-  // Quản lý trạng thái chuyến bay đã được sắp xếp
   const [displayFlight, setDisplayFlight] = useState(flights);
 
   useEffect(() => {
     setDisplayFlight(flights);
   }, [flights]);
 
-  // Hàm xử lý sắp xếp
   const handleSort = (results) => {
     setDisplayFlight(results);
   };
@@ -34,7 +34,7 @@ const FlightList = ({
       <div className="relative mt-10 flex gap-x-6">
         <FlightFilter flights={flights} onFilterResult={handleFilter} />
         <div className="flex min-h-[80vh] max-w-full grow flex-col space-y-4 md:max-w-[calc(100%_-_282px-24px)]">
-          <div className="mb-4 flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold">
                 {leg === "outbound"
@@ -47,10 +47,8 @@ const FlightList = ({
               </span>
             </div>
           </div>
-
-          {/* FlightSortBar nằm trên đầu danh sách các chuyến bay */}
           <FlightSortBar flights={displayFlight} onSort={handleSort} />
-
+          <ProgressBar loading={loading} />
           <div className="infinite-scroll-component relative divide-y md:space-y-1.5 md:divide-y-0">
             <div className="min-h-[200px] space-y-2">
               {displayFlight.map((flight, index) => (
@@ -59,6 +57,7 @@ const FlightList = ({
                   flight={flight}
                   onSelect={() => onSelectFlight(flight)}
                   leg={leg}
+                  loading={loading} // Truyền prop loading
                 />
               ))}
             </div>

@@ -1,7 +1,9 @@
 "use client";
+
 import React from "react";
 import { useState, useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
+import { useSession } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,8 +17,25 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
+import { useAppDispatch, useAppSelector } from "@/hooks/useAppDispatch";
+import {
+  fetchProfileStart,
+  fetchProfileSuccess,
+  fetchProfileFailure,
+  updateProfileStart,
+  updateProfileSuccess,
+  updateProfileFailure,
+} from "@/features/user/userSlice";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const UserProfileForm = () => {
+  const dispatch = useAppDispatch();
+  const { user, loading, updating, error } = useAppSelector(
+    (state) => state.user,
+  );
+  const { toast } = useToast();
+  const { data: session, update: sessionUpdate } = useSession(); // Correct destructuring
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,13 +43,10 @@ const UserProfileForm = () => {
     image: "",
     address: "",
   });
-  const [loading, setLoading] = useState(true);
-  const [updating, setUpdating] = useState(false);
-  const [error, setError] = useState(null);
-  const { toast } = useToast();
 
   useEffect(() => {
     const fetchProfile = async () => {
+      dispatch(fetchProfileStart());
       try {
         const response = await fetch("/api/user/profile");
 
@@ -39,21 +55,27 @@ const UserProfileForm = () => {
         }
         const data = await response.json();
 
+        dispatch(fetchProfileSuccess(data));
         setFormData(data);
       } catch (err) {
-        setError(err.message);
+        dispatch(fetchProfileFailure(err.message));
         toast({
           variant: "destructive",
           title: "Lỗi",
           description: "Không thể tải thông tin người dùng",
         });
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchProfile();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      setFormData(user);
+    }
+  }, [user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -66,8 +88,7 @@ const UserProfileForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setUpdating(true);
-
+    dispatch(updateProfileStart());
     try {
       const response = await fetch("/api/user/profile", {
         method: "POST",
@@ -84,23 +105,84 @@ const UserProfileForm = () => {
       if (!response.ok) {
         throw new Error("Failed to update profile");
       }
-
       const updatedData = await response.json();
 
+      dispatch(updateProfileSuccess(updatedData));
       setFormData(updatedData);
-
       toast({
         title: "Thành công",
         description: "Thông tin đã được cập nhật",
       });
     } catch (err) {
+      dispatch(updateProfileFailure(err.message));
       toast({
         variant: "destructive",
         title: "Lỗi",
         description: "Không thể cập nhật thông tin",
       });
-    } finally {
-      setUpdating(false);
+    }
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    // Kiểm tra loại file
+    if (!file.type.startsWith("image/")) {
+      toast({
+        variant: "destructive",
+        title: "Lỗi ảnh",
+        description: "Chỉ cho phép upload file hình ảnh (jpg, png, ...)",
+      });
+
+      return;
+    }
+    // Giới hạn size 2MB
+    if (file.size > 2 * 1024 * 1024) {
+      toast({
+        variant: "destructive",
+        title: "Lỗi ảnh",
+        description: "Kích thước ảnh tối đa là 2MB.",
+      });
+
+      return;
+    }
+
+    const formDataUpload = new FormData();
+
+    formDataUpload.append("avatar", file);
+
+    dispatch(updateProfileStart());
+
+    try {
+      const response = await fetch("/api/user/upload-image", {
+        method: "POST",
+        body: formDataUpload,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload image");
+      }
+
+      const data = await response.json();
+
+      dispatch(updateProfileSuccess(data.user));
+      setFormData((prev) => ({ ...prev, image: data.image }));
+
+      // Refresh session
+      await sessionUpdate();
+      toast({
+        title: "Thành công",
+        description: "Ảnh đại diện đã được cập nhật",
+      });
+    } catch (err) {
+      dispatch(updateProfileFailure(err.message));
+      toast({
+        variant: "destructive",
+        title: "Lỗi",
+        description: "Không thể cập nhật ảnh đại diện",
+      });
     }
   };
 
@@ -129,17 +211,6 @@ const UserProfileForm = () => {
   }
 
   if (error) {
-    return (
-      <div className="container mx-auto py-10">
-        <Card className="mx-auto max-w-2xl">
-          <CardContent className="p-6">
-            <div className="text-center text-red-500">
-              Error loading profile: {error}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
   }
 
   return (
@@ -151,8 +222,25 @@ const UserProfileForm = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="flex">
-              <FaUserCircle className="text-6xl text-gray-400" />
+            <div className="flex flex-col items-center space-y-2">
+              <Avatar className="size-20">
+                <AvatarImage
+                  src={formData.image || undefined}
+                  alt={formData.name || "avatar"}
+                />
+                <AvatarFallback>
+                  <FaUserCircle className="text-6xl text-gray-400" />
+                </AvatarFallback>
+              </Avatar>
+              <label className="cursor-pointer text-sm text-blue-600 hover:underline">
+                Thay đổi ảnh đại diện
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageChange}
+                />
+              </label>
             </div>
 
             <div className="space-y-4">

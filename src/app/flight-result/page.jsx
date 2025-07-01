@@ -6,7 +6,7 @@ import axios from "axios";
 import FlightList from "./components/FlightResult";
 import ChangeSearchBar from "./components/FlightChangeSearchBar";
 import FlightCard from "./components/FlightCard";
-import ProgressBar from "./components/ProgressBar"; // Import thanh tiến trình mới
+import ReviewFlightSection from "./components/ReviewFlightSection";
 
 const FlightSearchResult = () => {
   const searchParams = useSearchParams();
@@ -27,13 +27,15 @@ const FlightSearchResult = () => {
   const [selectedOutboundFlight, setSelectedOutboundFlight] = useState(null);
   const [selectedReturnFlight, setSelectedReturnFlight] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState(0); // Thêm state cho progress
+  const [showReview, setShowReview] = useState(false);
 
   const travelClass = searchParams.get("travel_class") || "1";
+  const minLoadingDuration = 4000; // Minimum loading duration (4 seconds)
 
   const fetchFlights = async (params, isReturn = false) => {
     setLoading(true);
-    setProgress(0);
+    const startTime = Date.now();
+
     try {
       const response = await axios.get("/api/flights", { params });
       const { best_flights = [], other_flights = [] } = response.data;
@@ -44,14 +46,22 @@ const FlightSearchResult = () => {
 
         return {
           ...flight,
-          availableSeats: Math.min(availableSeats, totalSeats), // Đảm bảo số ghế trống không vượt quá 60
+          availableSeats: Math.min(availableSeats, totalSeats),
         };
       });
 
+      // Calculate elapsed time and delay if needed
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = minLoadingDuration - elapsedTime;
+
+      if (remainingTime > 0) {
+        await new Promise((resolve) => setTimeout(resolve, remainingTime));
+      }
+
       if (!isReturn) {
-        setOutboundFlights(flightsWithSeats); // Dữ liệu chiều đi với số ghế ngẫu nhiên
+        setOutboundFlights(flightsWithSeats);
       } else {
-        setReturnFlights(flightsWithSeats); // Dữ liệu chiều về với số ghế ngẫu nhiên
+        setReturnFlights(flightsWithSeats);
       }
     } catch (error) {
       console.error("Error fetching flights:", error);
@@ -67,20 +77,33 @@ const FlightSearchResult = () => {
     }
   }, [step]);
 
-  // Hàm cập nhật progress bar trong khi loading
   useEffect(() => {
-    if (loading) {
-      const interval = setInterval(() => {
-        setProgress((prev) => (prev < 90 ? prev + 10 : prev));
-      }, 300);
+    const searchId = searchParams.get("searchId");
 
-      return () => clearInterval(interval);
-    } else {
-      setProgress(100); // Hoàn thành progress khi dừng loading
+    if (searchId) {
+      const cachedData = localStorage.getItem(`flightData_${searchId}`);
+
+      if (cachedData) {
+        setLoading(true); // Ensure loading starts for cached data
+        setTimeout(() => {
+          try {
+            const parsedData = JSON.parse(cachedData);
+            const { best_flights = [], other_flights = [] } = parsedData;
+            const combinedFlights = [...best_flights, ...other_flights];
+
+            setOutboundFlights(combinedFlights);
+            setLoading(false);
+          } catch (error) {
+            console.error("Lỗi khi đọc dữ liệu cache:", error);
+            setLoading(false);
+          }
+        }, minLoadingDuration); // Delay to ensure minimum loading time
+      }
     }
-  }, [loading]);
+  }, [searchParams]);
 
   useEffect(() => {
+    const searchId = searchParams.get("searchId");
     const engine = searchParams.get("engine");
     const departure_id = searchParams.get("departure_id");
     const arrival_id = searchParams.get("arrival_id");
@@ -91,8 +114,37 @@ const FlightSearchResult = () => {
     const gl = searchParams.get("gl") || "vn";
     const api_key = searchParams.get("api_key");
     const type = searchParams.get("type") || "1";
+    const adults = searchParams.get("adults") || "1";
+    const children = searchParams.get("children") || "0";
+    const infants_in_seat = searchParams.get("infants_in_seat") || "0";
+    const infants_on_lap = searchParams.get("infants_on_lap") || "0";
 
-    if (engine && departure_id && arrival_id && outbound_date && api_key) {
+    if (searchId) {
+      const cachedData = localStorage.getItem(`flightData_${searchId}`);
+
+      if (cachedData) {
+        setLoading(true);
+        setTimeout(() => {
+          try {
+            const parsedData = JSON.parse(cachedData);
+            const { best_flights = [], other_flights = [] } = parsedData;
+            const combinedFlights = [...best_flights, ...other_flights];
+
+            setOutboundFlights(combinedFlights);
+            setLoading(false);
+          } catch (error) {
+            console.error("Lỗi khi đọc dữ liệu cache:", error);
+            setLoading(false);
+          }
+        }, minLoadingDuration);
+      }
+    } else if (
+      engine &&
+      departure_id &&
+      arrival_id &&
+      outbound_date &&
+      api_key
+    ) {
       fetchFlights({
         engine,
         departure_id,
@@ -104,6 +156,10 @@ const FlightSearchResult = () => {
         gl,
         api_key,
         type,
+        adults,
+        children,
+        infants_in_seat,
+        infants_on_lap,
       });
     }
   }, [searchParams]);
@@ -112,34 +168,26 @@ const FlightSearchResult = () => {
     const departureToken = flight.departure_token;
 
     setSelectedOutboundFlight(flight);
-    const engine = searchParams.get("engine");
-    const departure_id = searchParams.get("departure_id");
-    const arrival_id = searchParams.get("arrival_id");
-    const outbound_date = searchParams.get("outbound_date");
-    const return_date = searchParams.get("return_date");
-    const currency = searchParams.get("currency");
-    const hl = searchParams.get("hl");
-    const gl = searchParams.get("gl") || "vn";
-    const api_key = searchParams.get("api_key");
+
     const type = searchParams.get("type") || "1";
 
     if (type === "2") {
+      setShowReview(true);
       localStorage.setItem("selectedOutboundFlight", JSON.stringify(flight));
       localStorage.setItem("totalPrice", JSON.stringify(flight.price));
-      router.push("/booking-details");
     } else if (type === "1") {
       setStep("return");
       fetchFlights(
         {
-          engine,
-          departure_id,
-          arrival_id,
-          outbound_date,
-          return_date,
-          currency,
-          hl,
-          gl,
-          api_key,
+          engine: searchParams.get("engine"),
+          departure_id: searchParams.get("departure_id"),
+          arrival_id: searchParams.get("arrival_id"),
+          outbound_date: searchParams.get("outbound_date"),
+          return_date: searchParams.get("return_date"),
+          currency: searchParams.get("currency"),
+          hl: searchParams.get("hl"),
+          gl: searchParams.get("gl") || "vn",
+          api_key: searchParams.get("api_key"),
           type: "1",
           departure_token: departureToken,
         },
@@ -148,22 +196,15 @@ const FlightSearchResult = () => {
     }
   };
 
-  const handleReSelectOutboundFlight = () => {
-    // Hàm để chọn lại chuyến bay đi
-    setStep("outbound");
-    setSelectedOutboundFlight(null);
-  };
-
   const handleSelectReturnFlight = (flight) => {
     setSelectedReturnFlight(flight);
-
+    setShowReview(true);
     localStorage.setItem(
       "selectedOutboundFlight",
       JSON.stringify(selectedOutboundFlight),
     );
     localStorage.setItem("selectedReturnFlight", JSON.stringify(flight));
 
-    // Tính toán tổng giá vé
     const outboundPrice = selectedOutboundFlight
       ? selectedOutboundFlight.price
       : 0;
@@ -171,16 +212,41 @@ const FlightSearchResult = () => {
     const totalPrice = outboundPrice + returnPrice;
 
     localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
+  };
 
-    // Chuyển hướng đến trang booking details
+  const handleContinue = () => {
+    if (selectedOutboundFlight) {
+      localStorage.setItem(
+        "selectedOutboundFlight",
+        JSON.stringify(selectedOutboundFlight),
+      );
+    }
+    if (selectedReturnFlight) {
+      localStorage.setItem(
+        "selectedReturnFlight",
+        JSON.stringify(selectedReturnFlight),
+      );
+      const totalPrice =
+        selectedOutboundFlight.price + selectedReturnFlight.price;
+
+      localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
+    } else if (selectedOutboundFlight) {
+      localStorage.setItem(
+        "totalPrice",
+        JSON.stringify(selectedOutboundFlight.price),
+      );
+      localStorage.removeItem("selectedReturnFlight");
+    }
     router.push("/booking-details");
   };
 
-  // JSX cho giao diện hiển thị và thanh progress
+  const outboundFlight = JSON.parse(
+    localStorage.getItem("selectedOutboundFlight"),
+  );
+  const returnFlight = JSON.parse(localStorage.getItem("selectedReturnFlight"));
+
   return (
     <div className="mx-auto max-w-7xl px-4" style={{ paddingTop: "80px" }}>
-      {loading && <ProgressBar progress={progress} />}{" "}
-      {/* Hiển thị thanh tiến trình */}
       <ChangeSearchBar
         from={from}
         to={to}
@@ -191,7 +257,18 @@ const FlightSearchResult = () => {
         classType="Economy"
         onSearch={() => {}}
       />
-      {selectedOutboundFlight && step === "return" && (
+      {showReview && (
+        <ReviewFlightSection
+          outbound={selectedOutboundFlight}
+          inbound={step === "return" ? selectedReturnFlight : null}
+          totalPrice={
+            selectedOutboundFlight.price + (selectedReturnFlight?.price || 0)
+          }
+          onContinue={handleContinue}
+          onClose={() => setShowReview(false)}
+        />
+      )}
+      {selectedOutboundFlight && step === "return" && !selectedReturnFlight && (
         <div className="mb-4 rounded-lg border bg-gray-100 p-4">
           <h3 className="mb-2 text-lg font-bold">Chuyến bay bạn đã lựa chọn</h3>
           <FlightCard
@@ -199,7 +276,12 @@ const FlightSearchResult = () => {
             onSelect={() => {}}
             leg="outbound"
             isSelectedFlight={true}
-            onChangeFlight={handleReSelectOutboundFlight} // Thay đổi ở đây
+            onChangeFlight={() => {
+              setStep("outbound");
+              setSelectedOutboundFlight(null);
+              setShowReview(false);
+            }}
+            loading={loading}
           />
         </div>
       )}
@@ -209,7 +291,8 @@ const FlightSearchResult = () => {
           onSelectFlight={handleSelectOutboundFlight}
           leg="outbound"
           totalFlightsFound={outboundFlights.length}
-          travelClass={travelClass} // Truyền hạng ghế vào FlightList
+          travelClass={travelClass}
+          loading={loading}
         />
       ) : (
         <FlightList
@@ -217,7 +300,8 @@ const FlightSearchResult = () => {
           onSelectFlight={handleSelectReturnFlight}
           leg="return"
           totalFlightsFound={returnFlights.length}
-          travelClass={travelClass} // Truyền hạng ghế vào FlightList
+          travelClass={travelClass}
+          loading={loading}
         />
       )}
     </div>

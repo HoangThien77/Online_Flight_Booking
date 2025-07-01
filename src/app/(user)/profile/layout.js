@@ -5,7 +5,7 @@ const UserProfileLayout = ({ children }) => {
       {" "}
       {/* Thêm khoảng trống phía trên */}
       {children}
-      <Toaster />
+      <Toaster position="top-right" />
     </div>
   );
 };

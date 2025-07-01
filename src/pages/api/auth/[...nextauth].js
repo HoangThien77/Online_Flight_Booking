@@ -23,14 +23,12 @@ export default NextAuth({
         });
 
         if (user && bcrypt.compareSync(credentials.password, user.password)) {
-          console.log(user);
-
           return {
             id: user.id,
             role: user.role,
             email: user.email,
             name: user.name,
-            image: user.image,
+            image: user.image, // Include image here
           };
         }
 
@@ -40,56 +38,74 @@ export default NextAuth({
   ],
   session: {
     strategy: "jwt",
-    maxAge: 24 * 60 * 60, // Thời gian sống của JWT là 24 giờ
+    maxAge: 24 * 60 * 60, // 24 hours
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user, account }) {
-      if (account?.provider === "google") {
-        const dbUser = await prisma.user.upsert({
-          where: { email: user.email }, // Sử dụng user.email thay vì token.email
-          update: {
-            name: user.name,
-            image: user.image,
-          },
-          create: {
-            email: user.email,
-            name: user.name,
-            image: user.image,
-            role: "USER",
-            provider: "google",
-            providerAccountId: user.id,
-          },
-        });
-
-        // Thêm thông tin vào token
-        token.id = dbUser.id;
-        token.role = dbUser.role;
-      } else if (user) {
-        // Xử lý đăng nhập credentials
+      if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.email = user.email;
+        token.name = user.name;
+        token.image = user.image;
+      }
+      if (account?.provider === "google") {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: user.email },
+        });
+
+        token.id = dbUser.id;
+        token.role = dbUser.role;
+        token.email = dbUser.email;
+        token.name = dbUser.name;
+        token.image = dbUser.image; // Fetch from DB
+      } else if (token.email) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: token.email },
+        });
+
+        token.id = dbUser.id;
+        token.role = dbUser.role;
+        token.name = dbUser.name;
+        token.image = dbUser.image; // Fetch from DB for Credentials
       }
 
       return token;
     },
 
     async session({ session, token }) {
-      if (!session.user) {
-        session.user = {};
+      if (session.user) {
+        session.user = {
+          ...session.user,
+          id: token.id,
+          role: token.role,
+          email: token.email,
+          name: token.name,
+          image: token.image, // Ensure image is included
+        };
       }
-
-      session.user = {
-        ...session.user,
-        id: token.id,
-        role: token.role,
-      };
-      console.log(session);
+      console.log("Session in callback:", session); // Debug log
 
       return session;
     },
 
-    // Thêm signIn callback để lấy thông tin user Google
+    async session({ session, token }) {
+      if (session.user) {
+        session.user = {
+          ...session.user,
+          id: token.id,
+          role: token.role,
+          email: token.email,
+          name: token.name,
+          image: token.image, // Include image in session
+        };
+      }
+      console.log("Session:", session); // Debug log
+
+      return session;
+    },
+
     async signIn({ user, account }) {
       if (account.provider === "google") {
         return true;

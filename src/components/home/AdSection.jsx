@@ -30,7 +30,7 @@ export default function AdSection() {
       infants_in_seat: "0",
       infants_on_lap: "0",
       api_key:
-        "e03abb5be37ed80732bccb9539d1c81afff47ad32c3e1f2c94c06deab673afab",
+        "01c66bdf6c895db5475ec52d592b15c0101d368c0b772891ef6ff8ed20b9beae",
     };
 
     // Map destinations to airport codes

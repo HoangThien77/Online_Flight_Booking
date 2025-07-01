@@ -2,6 +2,7 @@ import axios from "axios";
 
 export default async function handler(req, res) {
   console.log("Request query:", req.query);
+  console.log("Travel Class từ query:", req.query.travel_class);
   const {
     engine,
     departure_id,
@@ -14,20 +15,18 @@ export default async function handler(req, res) {
     api_key,
     type = "1",
     departure_token,
-    travel_class = "1",
-    adults = 1,
-    children = 0,
-    infants_in_seat = 0,
-    infants_on_lap = 0,
+    adults = "1",
+    children = "0",
+    infants_in_seat = "0",
+    infants_on_lap = "0",
+    travel_class,
   } = req.query;
 
-  // Log lại thông tin hành khách nhận được để kiểm tra
   console.log("Thông tin hành khách nhận được từ client:");
   console.log("Người lớn:", adults);
   console.log("Trẻ em:", children);
   console.log("Trẻ sơ sinh có ghế:", infants_in_seat);
   console.log("Trẻ sơ sinh ngồi cùng người lớn:", infants_on_lap);
-  console.log("Received travel_class from client:", travel_class);
 
   const vietnamTimeZone = "Asia/Ho_Chi_Minh";
   const currentDateTime = new Date(
@@ -74,11 +73,11 @@ export default async function handler(req, res) {
     gl,
     api_key,
     type,
-    travel_class,
     adults,
     children,
     infants_in_seat,
     infants_on_lap,
+    travel_class: travel_class || 1,
   };
 
   if (departure_token) {
