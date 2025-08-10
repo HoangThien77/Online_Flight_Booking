@@ -251,6 +251,14 @@ export default function BookingDetailsPage() {
     const storedTotalPrice = localStorage.getItem("totalPrice");
     const storedPassengers = localStorage.getItem("passengers");
 
+    console.log("🔍 Debug - Stored data:", {
+      outboundFlight: !!outboundFlight,
+      returnFlight: !!returnFlight,
+      storedFlightType,
+      storedTotalPrice,
+      storedPassengers,
+    });
+
     if (outboundFlight) {
       setFlightDetails({
         outbound: JSON.parse(outboundFlight),
@@ -266,10 +274,14 @@ export default function BookingDetailsPage() {
       setFlightType(storedFlightType);
     }
 
+    // Initialize passengersInfo with fallback
+    let newPassengersInfo = [];
+
     if (storedPassengers) {
       try {
         const parsedPassengers = JSON.parse(storedPassengers);
-        let newPassengersInfo = [];
+
+        console.log("🔍 Debug - Parsed passengers:", parsedPassengers);
 
         // Add adult passengers
         for (let i = 0; i < parsedPassengers.adults; i++) {
@@ -311,17 +323,81 @@ export default function BookingDetailsPage() {
             nationality: "Việt Nam",
           });
         }
-
-        setPassengersInfo(newPassengersInfo);
       } catch (error) {
         console.error("Error parsing passengers:", error);
+        // Fallback to default passenger if parsing fails
+        newPassengersInfo = [
+          {
+            type: "adult",
+            lastName: "",
+            firstName: "",
+            gender: "",
+            dob: null,
+            nationality: "Việt Nam",
+          },
+        ];
+      }
+    } else {
+      // Fallback: if no stored passengers, create at least one adult passenger
+      console.log("🔍 Debug - No stored passengers, creating fallback");
+      newPassengersInfo = [
+        {
+          type: "adult",
+          lastName: "",
+          firstName: "",
+          gender: "",
+          dob: null,
+          nationality: "Việt Nam",
+        },
+      ];
+    }
+
+    console.log("🔍 Debug - Final passengersInfo:", newPassengersInfo);
+    setPassengersInfo(newPassengersInfo);
+
+    // Also update the passengers state for consistency
+    if (storedPassengers) {
+      try {
+        const parsedPassengers = JSON.parse(storedPassengers);
+
+        setPassengers(parsedPassengers);
+      } catch (error) {
+        console.error("Error parsing passengers for state:", error);
+        setPassengers({
+          adults: 1,
+          children: 0,
+          infants_in_seat: 0,
+          infants_on_lap: 0,
+        });
       }
     }
   }, []);
 
+  // Additional safety net: ensure passengersInfo always has at least one passenger
+  useEffect(() => {
+    if (passengersInfo.length === 0) {
+      console.log(
+        "🔍 Debug - passengersInfo is empty, adding fallback passenger",
+      );
+      setPassengersInfo([
+        {
+          type: "adult",
+          lastName: "",
+          firstName: "",
+          gender: "",
+          dob: null,
+          nationality: "Việt Nam",
+        },
+      ]);
+    }
+  }, [passengersInfo.length]);
+
   // Render
   return (
     <div>
+      {/* Debug Info - Remove this after fixing */}
+      {console.log("🔍 Debug - Render passengersInfo:", passengersInfo)}
+
       {/* Header */}
       <div
         className="relative flex w-full items-center justify-between px-8 py-4 text-white"
