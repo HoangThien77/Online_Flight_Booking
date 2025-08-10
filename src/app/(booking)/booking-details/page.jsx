@@ -352,7 +352,6 @@ export default function BookingDetailsPage() {
       ];
     }
 
-    console.log("🔍 Debug - Final passengersInfo:", newPassengersInfo);
     setPassengersInfo(newPassengersInfo);
 
     // Also update the passengers state for consistency
@@ -395,9 +394,6 @@ export default function BookingDetailsPage() {
   // Render
   return (
     <div>
-      {/* Debug Info - Remove this after fixing */}
-      {console.log("🔍 Debug - Render passengersInfo:", passengersInfo)}
-
       {/* Header */}
       <div
         className="relative flex w-full items-center justify-between px-8 py-4 text-white"
